@@ -44,3 +44,7 @@
 (require 'bind-key)                ;; if you use any :bind variant
 
 ;;; init-use-package.el ends here
+
+(use-package evil
+    :ensure t
+    :init (evil-mode))
