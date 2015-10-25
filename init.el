@@ -46,5 +46,32 @@
 ;;; init-use-package.el ends here
 
 (use-package evil
-    :ensure t
-    :init (evil-mode))
+  :ensure t
+  :config (evil-mode))
+
+(use-package evil-leader
+  :ensure t
+  :config
+  (progn
+    (global-evil-leader-mode)
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key "e" 'find-file)))
+
+(use-package evil-escape
+  :ensure t
+  :config (evil-escape-mode))
+
+(use-package helm
+  :ensure t
+  :config (helm-mode))
+
+(use-package projectile
+  :ensure t
+  :config (projectile-global-mode))
+
+(use-package helm-projectile
+  :ensure t
+  :init (setq projectile-completion-system 'helm)
+  :config
+  (progn
+    (helm-projectile-on)))
