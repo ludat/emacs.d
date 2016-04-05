@@ -38,13 +38,12 @@ values."
      emoji
      selectric
      command-log
+     gnus
      ;; better-defaults
      git
      version-control
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom
-            shell-default-shell 'multi-term)
+     semantic
+     (shell :variables shell-default-shell 'eshell)
      (ranger :variables
             ranger-show-preview t)
 
@@ -95,7 +94,7 @@ values."
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. (default t)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
@@ -134,9 +133,10 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Terminus"
-                               ;; "Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '(
+                               "Source Code Pro"
+                               ;; "Terminus"
+                               :size 12
                                :weight normal
                                :width normal
                                ;; :powerline-scale 1.2)
@@ -196,7 +196,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-micro-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -250,7 +250,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("grep" "pt" "ag" "ack")
+   dotspacemacs-search-tools '("ag" "ack" "grep" "pt")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -260,7 +260,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'all
    ))
 
 (defun dotspacemacs/user-init ()
@@ -268,13 +268,31 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  (setq-default
+   whitespace-style '(face tabs tab-mark)
+   whitespace-display-mappings
+   '((newline-mark 10 [172 10])
+     (tab-mark 9 [9655 9]))
+   )
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  )
+  ;; Set ctrl w in completion mode to erase last work
+  ;; (bb/define-key company-active-map
+  ;;                (kbd "C-w") 'evil-delete-backward-word)
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
+  (add-hook 'eshell-mode-hook (
+    lambda () (progn
+      (setq-local global-hl-line-mode nil)
+      (setq-local scroll-margin 0)
+    )
+  ))
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -291,8 +309,13 @@ layers configuration. You are free to put any user code."
  '(exec-path
    (quote
     ("/usr/local/sbin/" "/usr/local/bin/" "/usr/bin/" "/usr/lib/jvm/default/bin/" "/usr/bin/site_perl/" "/usr/bin/vendor_perl/" "/usr/bin/core_perl/" "/usr/lib/emacs/24.5/x86_64-unknown-linux-gnu/" "~/.cabal/bin/")))
+ '(org-agenda-files (quote ("~/org/main.org")))
  '(paradox-github-token t)
- '(ring-bell-function (quote ignore) t))
+ '(ring-bell-function (quote ignore) t)
+ '(safe-local-variable-values
+   (quote
+    ((haskell-process-use-ghci . t)
+     (haskell-indent-spaces . 4)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
