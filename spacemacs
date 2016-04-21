@@ -47,6 +47,7 @@ values."
      (ranger :variables
             ranger-show-preview t)
 
+     elm
      emacs-lisp
      typescript
      javascript
@@ -265,9 +266,11 @@ values."
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
-It is called immediately after `dotspacemacs/init'.  You are free to put almost
-any user code here.  The exception is org related code, which should be placed
-in `dotspacemacs/user-config'."
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+ This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
+`dotspacemacs/user-config' first."
   (setq-default
    whitespace-style '(face tabs tab-mark)
    whitespace-display-mappings
@@ -279,10 +282,14 @@ in `dotspacemacs/user-config'."
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
-layers configuration. You are free to put any user code."
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
   ;; Set ctrl w in completion mode to erase last work
   ;; (bb/define-key company-active-map
   ;;                (kbd "C-w") 'evil-delete-backward-word)
+  (global-whitespace-mode)
   (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'auto-fill-mode)
 
@@ -296,31 +303,3 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil)
- '(ahs-default-range (quote ahs-range-whole-buffer))
- '(ahs-idle-interval 0.25)
- '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil)
- '(exec-path
-   (quote
-    ("/usr/local/sbin/" "/usr/local/bin/" "/usr/bin/" "/usr/lib/jvm/default/bin/" "/usr/bin/site_perl/" "/usr/bin/vendor_perl/" "/usr/bin/core_perl/" "/usr/lib/emacs/24.5/x86_64-unknown-linux-gnu/" "~/.cabal/bin/")))
- '(org-agenda-files (quote ("~/org/main.org")))
- '(paradox-github-token t)
- '(ring-bell-function (quote ignore) t)
- '(safe-local-variable-values
-   (quote
-    ((haskell-process-use-ghci . t)
-     (haskell-indent-spaces . 4)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C"))))
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
