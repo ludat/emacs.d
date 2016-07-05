@@ -305,12 +305,18 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; Set ctrl w in completion mode to erase last work
-  ;; (bb/define-key company-active-map
-  ;;                (kbd "C-w") 'evil-delete-backward-word)
+  (define-key company-active-map
+    (kbd "C-w") 'evil-delete-backward-word)
+  ;; Set ctrl-w in helm mode
+  (define-key helm-map
+    (kbd "C-w") 'evil-delete-backward-word)
+  ;; Whitespace mode everywhere!
   (global-whitespace-mode)
+  ;; Wrap on too long lines
   (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'auto-fill-mode)
 
+  ;; disable line highlight and margin for eshell mode
   (add-hook 'eshell-mode-hook (
     lambda () (progn
       (setq-local global-hl-line-mode nil)
