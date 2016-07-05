@@ -37,7 +37,6 @@ values."
      emoji
      selectric
      command-log
-     gnus
      ;; better-defaults
      git
      version-control
@@ -53,6 +52,7 @@ values."
      python
      rust
      haskell
+     scala
 
      markdown
      org
