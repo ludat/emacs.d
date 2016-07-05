@@ -291,6 +291,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
       )
     ;; Don't ask for confirmation when editing a vc symlink
     vc-follow-symlinks t
+    ;; Rust config
+    rust-enable-racer t
+    racer-rust-src-path "/home/ludat/.local/share/src/rustc-nightly/src"
     )
   )
 
