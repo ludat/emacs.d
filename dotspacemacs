@@ -312,6 +312,8 @@ you should place your code here."
   (with-eval-after-load 'helm
    (define-key helm-map
      (kbd "C-w") 'evil-delete-backward-word))
+  (with-eval-after-load 'evil
+    (add-hook 'evil-insert-state-exit-hook (lambda () (save-current-buffer))))
   ;; Whitespace mode everywhere!
   (global-whitespace-mode)
   ;; Wrap on too long lines
