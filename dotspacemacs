@@ -51,7 +51,7 @@ values."
      javascript
      python
      rust
-     haskell
+     (haskell :variables haskell-completion-backend 'intero)
      scala
 
      markdown
@@ -320,6 +320,20 @@ you should place your code here."
   (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'auto-fill-mode)
 
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (setq-local whitespace-style
+                          (remove 'lines-tail whitespace-style)
+              )))
+  ;; org mode configs
+  (with-eval-after-load 'org
+   (setq
+    org-directory "~/org/"
+    org-agenda-files '("~/org/")
+    org-refile-targets '((nil :maxlevel . 3)
+                         (org-agenda-files :maxlevel . 3))
+    )
+   )
   ;; disable line highlight and margin for eshell mode
   (add-hook 'eshell-mode-hook (
     lambda () (progn
