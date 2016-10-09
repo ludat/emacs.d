@@ -314,6 +314,9 @@ you should place your code here."
      (kbd "C-w") 'evil-delete-backward-word))
   (with-eval-after-load 'evil
     (add-hook 'evil-insert-state-exit-hook (lambda () (save-current-buffer))))
+  ;; show word diff in magit
+  (with-eval-after-load 'magit
+    (setq magit-diff-refine-hunk 'all))
   ;; Whitespace mode everywhere!
   (global-whitespace-mode)
   ;; Wrap on too long lines
