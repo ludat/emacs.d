@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -49,6 +50,9 @@ values."
      emacs-lisp
      typescript
      javascript
+     (ruby :variables
+           ruby-version-manager 'rvm
+           ruby-test-runner 'rspec)
      python
      rust
      (haskell :variables haskell-completion-backend 'intero)
@@ -58,6 +62,7 @@ values."
      org
      yaml
 
+     ruby-on-rails
      django
      ansible
      vagrant
