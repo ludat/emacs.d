@@ -318,7 +318,7 @@ you should place your code here."
    (define-key helm-map
      (kbd "C-w") 'evil-delete-backward-word))
   (with-eval-after-load 'evil
-    (add-hook 'evil-insert-state-exit-hook (lambda () (save-current-buffer))))
+    (add-hook 'evil-insert-state-exit-hook (lambda () (save-some-buffers t))))
   ;; show word diff in magit
   (with-eval-after-load 'magit
     (setq magit-diff-refine-hunk 'all))
